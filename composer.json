@@ -1,0 +1,10 @@
+{
+    "name": "village/aws-competitors",
+    "authors": [
+        {
+            "name": "Kolmakov Sergey",
+            "email": "s-consul@mail.ru"
+        }
+    ],
+    "require": {}
+}
