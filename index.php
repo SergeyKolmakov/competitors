@@ -17,6 +17,8 @@ function curl_get_contents($url)
 $url  = $_GET['url'];
 $html = curl_get_contents($url);
 
+echo $html;
+
 phpQuery::newDocument($html);
 $title = pq('title')->html();
 phpQuery::unloadDocuments();
