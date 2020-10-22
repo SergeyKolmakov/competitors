@@ -75,6 +75,9 @@ $answer['data']['minPrice']    = $minPrice;
 $answer['data']['maxPrice']    = $maxPrice;
 
 if ($isAvailable && ($price == 9999999 or !is_int($price))) {
+    echo '<pre>';
+    echo $html;
+    echo '</pre>';
     thowError(505, 'Parser error. No price', $url);
 }
 
