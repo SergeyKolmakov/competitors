@@ -1,60 +1,82 @@
 <?php
 
 // TODO
-// * logger
-// * userAgent random
 // * proxy
+// * is price < average - alert!!!
+/*
+https://xml.yandex.ru/test/
+site:fitnessbar.ru/catalog/ |
+site:kupiprotein.ru/sportivnoe-pitanie/ |
+site:www.fit-health.ru/catalog/ |
+site:gold-standart.com |
+site:www.brutalshop.ru/products/ |
+site:strongline.net/catalog/)
+title:(Ultra Women's VPLab 90 капл.) (site:fitnessbar.ru/catalog/ | site:kupiprotein.ru/sportivnoe-pitanie/ | site:www.fit-health.ru/catalog/ | site:gold-standart.com | site:www.brutalshop.ru/products/ | site:spb.kulturist1.ru/catalog/ | site:body-factory.ru/catalog/)
+ */
 
 header('Content-Type: application/json');
 
+require_once $_SERVER["DOCUMENT_ROOT"] . '/functions.php';
 require_once $_SERVER["DOCUMENT_ROOT"] . '/lib/phpQuery.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . '/config/curl.config.php';
+
+$url  = $_GET['url'];
+$host = parse_url($url, PHP_URL_HOST);
 
 $answer            = [];
 $answer['code']    = 500;
 $answer['message'] = 'Unknown error';
+$answer['url']     = $url;
 
-$url = $_GET['url'];
-
-if (mb_strlen($url) < 5) {
-    $answer['code']    = 500;
-    $answer['message'] = 'Empty param';
-    echo json_encode($answer);
-    exit;
+if (mb_strlen($url) < 5 || empty($host)) {
+    thowError(500, 'Empty param', $url);
 }
 
-function curl_get_contents($url)
-{
-    $config['useragent'] = 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
-
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_USERAGENT, $config['useragent']);
-    curl_setopt($ch, CURLOPT_REFERER, 'https://google.com/');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return $data;
-}
-
-$html = curl_get_contents($url);
+$html = curl_get_contents($url, $config);
 
 if (empty($html)) {
-    $answer['code']    = 404;
-    $answer['message'] = 'Page not found';
-    echo json_encode($answer);
-    exit;
+    thowError(404, 'Page not found', $url);
 }
+
+$handler = $_SERVER["DOCUMENT_ROOT"] . '/competitors/' . $host . '.php';
+
+if (!file_exists($handler)) {
+    thowError(500, 'No handler', $url);
+}
+
+$title       = 'Error';
+$isAvailable = false;
+$isRange     = false;
+$price       = 9999999;
+$minPrice    = 0;
+$maxPrice    = 0;
 
 phpQuery::newDocument($html);
 $title = pq('title')->html();
+
+// universal - send class name
+// if many - range, if single
+// parseCompetitor('.card_price--new span');
+require_once $handler;
+
 phpQuery::unloadDocuments();
 
-$answer['code']    = 200;
-$answer['message'] = 'Sucsess';
-$answer['data']    = $title;
+if ($minPrice == $maxPrice) {
+    $isRange = false;
+}
+
+$answer['code']                = 200;
+$answer['message']             = 'Success';
+$answer['data']['title']       = $title;
+$answer['data']['isAvailable'] = $isAvailable;
+$answer['data']['isRange']     = $isRange;
+$answer['data']['price']       = $price;
+$answer['data']['minPrice']    = $minPrice;
+$answer['data']['maxPrice']    = $maxPrice;
+
+if ($isAvailable && !!$price) {
+    thowError(505, 'Parser error. No price', $url);
+}
 
 echo json_encode($answer);
 exit;

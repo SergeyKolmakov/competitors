@@ -1,0 +1,44 @@
+<?php
+
+$userAgentArray      = [];
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/604.3.5 (KHTML, like Gecko) Version/11.0.1 Safari/604.3.5";
+$userAgentArray[]    = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.89 Safari/537.36 OPR/49.0.2725.47";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0.2 Safari/604.4.7";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:57.0) Gecko/20100101 Firefox/57.0";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
+$userAgentArray[]    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36";
+$userAgentArray[]    = "Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0";
+$userAgentArray[]    = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36 Edge/15.15063";
+$random              = rand(0, count($userAgentArray) - 1);
+$config['useragent'] = $userAgentArray[$random];
+
+$refererArray      = [];
+$refererArray[]    = 'https://www.google.com/search?&q=bcaa';
+$refererArray[]    = 'https://vk.com/im';
+$refererArray[]    = 'https://vk.com/groups';
+$refererArray[]    = 'https://www.instagram.com/';
+$refererArray[]    = 'https://yandex.ru/search/?lr=2&text=optimum';
+$refererArray[]    = 'https://yandex.ru/images/search?from=tabbar&text=amino';
+$refererArray[]    = 'https://www.bing.com/search?q=animal&FORM=HDRSC1';
+$refererArray[]    = 'https://www.bing.com/images/search?q=gold-standart&form=HDRSC2&first=1&scenario=ImageBasicHover';
+$refererArray[]    = 'http://procspb.ru/plan-proverok';
+$refererArray[]    = 'https://spb.sledcom.ru/folder/918993';
+$refererArray[]    = 'http://78.rospotrebnadzor.ru/2020/schedule/125481110';
+$refererArray[]    = 'https://www.nalog.ru/rn78/list/28/122001558-12';
+$refererArray[]    = 'https://78.xn--b1aew.xn--p1ai/request_main';
+$random            = rand(0, count($refererArray) - 1);
+$config['referer'] = $refererArray[$random];
